@@ -7,6 +7,7 @@ import datetime
 app = Flask(__name__)
 CORS(app)
 
+
 def get_conn():
     return psycopg2.connect(
         host=os.getenv("DB_HOST", "db"),
@@ -31,6 +32,7 @@ def init_db():
     cur.close()
     conn.close()
 
+
 @app.route("/health")
 def health():
     try:
@@ -45,6 +47,7 @@ def health():
         "db": db_status,
         "time": datetime.datetime.utcnow().isoformat()
     })
+
 
 @app.route("/api/notes", methods=["GET"])
 def get_notes():
@@ -64,6 +67,7 @@ def get_notes():
         }
         for r in rows
     ])
+
 
 @app.route("/api/notes", methods=["POST"])
 def create_note():
@@ -85,6 +89,7 @@ def create_note():
 
     return jsonify({"id": note_id, "message": "nota creada"}), 201
 
+
 @app.route("/api/notes/<int:note_id>", methods=["DELETE"])
 def delete_note(note_id):
     conn = get_conn()
@@ -95,6 +100,7 @@ def delete_note(note_id):
     conn.close()
 
     return jsonify({"message": "nota eliminada"})
+
 
 if __name__ == "__main__":
     init_db()
