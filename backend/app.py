@@ -17,6 +17,7 @@ def get_conn():
         password=os.getenv("DB_PASSWORD", "postgres")
     )
 
+
 def init_db():
     conn = get_conn()
     cur = conn.cursor()
