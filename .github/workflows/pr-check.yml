@@ -1,0 +1,33 @@
+name: PR Check
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  validate:
+    name: Validar PR
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: 'pip'
+
+      - name: Instalar dependencias
+        run: pip install -r backend/requirements.txt
+
+      - name: Tests
+        run: |
+          cd backend
+          pytest tests/ -v
+
+      - name: Verificar docker-compose
+        run: docker compose config --quiet

@@ -1,3 +1,10 @@
 .env
 __pycache__/
 *.pyc
+backend/.venv/
+.venv/
+.pytest_cache/
+.coverage
+htmlcov/
+backend/.pytest_cache/
+backend/.coverage

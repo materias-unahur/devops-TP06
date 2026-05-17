@@ -67,7 +67,10 @@ def get_notes():
 
 @app.route("/api/notes", methods=["POST"])
 def create_note():
-    data = request.get_json()
+    data = request.get_json() or {}
+
+    if not data.get("title"):
+        return jsonify({"error": "el campo title es obligatorio"}), 400
 
     conn = get_conn()
     cur = conn.cursor()
